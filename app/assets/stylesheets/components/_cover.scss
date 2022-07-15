@@ -1,0 +1,15 @@
+.cover {
+  background-image: url(asset_path('cover.jpeg'));
+  height: 500px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 40%;
+}
+
+h1 {
+  position: relative;
+  text-align: center;
+  position: relative;
+  top: 30%;
+}
