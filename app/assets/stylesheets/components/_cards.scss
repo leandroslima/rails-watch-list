@@ -11,3 +11,18 @@
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
+
+.card-large {
+  height: 50vh;
+  max-height: 400px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: black;
+}
+
+.card-small {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+}
