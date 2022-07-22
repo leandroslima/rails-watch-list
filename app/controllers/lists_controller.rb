@@ -7,6 +7,7 @@ class ListsController < ApplicationController
     @list = List.find(params[:id])
     @bookmarks = Bookmark.where(list_id: params[:id])
     @new_bookmark = Bookmark.new
+    @review = Review.new(list: @list)
   end
 
   def new
@@ -18,8 +19,14 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list)
     else
-      render 'modal', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @list = List.find(params[:id])
+    @list.destroy
+    redirect_to root_path
   end
 
   private

@@ -1,15 +1,29 @@
 <div class='position-relative mb-3'>
-  <div class="card-category card-large" style='background-image: url(<%= asset_path @list.background_image %>)'>
-    <%= @list.name %>
-  </div>
+  <% if @list.background_image %>
+            <div class="card-category card-large" style='background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path @list.background_image %>)'>
+              <%= @list.name %>
+            </div>
+          <% else %>
+            <div class="card-category card-large" style='background-color: black)'>
+              <%= @list.name %>
+            </div>
+          <% end %>
   <span class='movie-tag'><%= pluralize(@list.movies.size, 'movie') %></span>
 </div>
 
 <div class='container'>
-  <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
-      Add Movie
-    </button>
+  <div class="d-flex justify-content-evenly">
+    <span class="mb-2 d-block"><%= 'There isn´t any movies yet!' if @list.movies.empty? %></span>
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
+        Add Movie
+      </button>
+      <%= link_to list_path(@list), method: :delete, data: { confirm: 'Do you really want to delete the list?' } do %>
+        <button type="button" class="btn btn-danger text-white">
+          Delete List
+        </button>
+      <% end %>
+    </div>
   </div>
   <div class="row my-3 justify-content-center">
     <% @bookmarks.each do |bookmark| %>
@@ -29,7 +43,35 @@
       </div>
     <% end %>
   </div>
+  <hr class='my-5'>
+  <div class="row">
+    <div class='col-12 col-sm-6'>
+      <h3>Reviews</h3>
+      <% if @list.reviews.empty? %>
+        <small><em class="text-muted">Leave the first review to this list</em></small>
+      <% end %>
+      <% @list.reviews.each do |review| %>
+        <div>
+          <% review.rating.times  do%>
+            <i class="fas fa-star star-yellow" style='color: #f3da35'></i>
+          <% end %>
+            <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+            <p class="mb-0"><%= review.comment %></p>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+    <div class='col-12 col-sm-6'>
+      <div class='bg-white rounded p-3'>
+        <h5>Add a review</h5>
+        <%= simple_form_for [@list, @review] do |f| %>
+          <%= f.input :comment, placeholder: "Write your review" %>
+          <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "Your rating", input_html: { data: { controller: "star-rating" } } %>
+          <%= f.submit class: 'btn btn-secondary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%= render 'bookmarks/modal', list: @list, bookmark: @bookmark %>
-

@@ -11,9 +11,16 @@
     <% @lists.each do |list| %>
       <div class="col-12 col-sm-6 col-md-4 mb-3">
         <%= link_to list_path(list) do %>
-          <div class="card-category" style='background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path list.background_image %>)'>
-            <%= list.name %>
-          </div>
+          <% if list.background_image %>
+            <div class="card-category" style='background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path list.background_image %>)'>
+              <%= list.name %>
+            </div>
+          <% else %>
+            <div class="card-category" style='background-color: black)'>
+              <%= list.name %>
+            </div>
+          <% end %>
+
         <% end %>
       </div>
     <% end %>
