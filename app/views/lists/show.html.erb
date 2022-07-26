@@ -67,7 +67,7 @@
         <%= simple_form_for [@list, @review] do |f| %>
           <%= f.input :comment, placeholder: "Write your review" %>
           <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "Your rating", input_html: { data: { controller: "star-rating" } } %>
-          <%= f.submit class: 'btn btn-secondary' %>
+          <%= f.submit class: 'btn btn-success text-white' %>
         <% end %>
       </div>
     </div>
